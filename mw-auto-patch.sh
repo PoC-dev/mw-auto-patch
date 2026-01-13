@@ -1,5 +1,25 @@
 #!/bin/sh
 
+# Copyright 2025, 2026, Patrik Schindler <poc@pocnet.net>.
+#
+# This file is part of mw-auto-patch, a shell script for automatic upgrades of
+# MediaWiki instances from diff files. The original repository is located on
+# GitHub: https://github.com/PoC-dev/mw-auto-patch
+#
+# This is free software; you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 2 of the License, or (at your option) any later
+# version.
+#
+# It is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# it; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA 02111-1307 USA or get it at
+# http://www.gnu.org/licenses/gpl.html
+
 set -e
 
 # Create temporary work directory for downloads. Automatically clean up on exit.
@@ -35,7 +55,7 @@ for MW_RELEASE_NOTES in $(find /var/www -maxdepth 3 -type f -a -name 'RELEASE-NO
 		if [ -s "${TMPDIR}/${NEXTFILE}" ]; then
 			cd "${DOCUMENT_ROOT}" && {
 				zcat "${TMPDIR}/${NEXTFILE}" |patch -p1
-				php -q maintenance/update.php --quick 
+				php -q maintenance/update.php --quick
 				cd -
 			}
 		fi
