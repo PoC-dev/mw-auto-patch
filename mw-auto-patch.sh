@@ -36,7 +36,7 @@ for MW_RELEASE_NOTES in $(find /var/www -maxdepth 3 -type f -a -name 'RELEASE-NO
 		V_PATCH="$(echo "${V_INSTALLED}" |sed -E 's/^[0-9]\.[0-9]{1,2}\.([0-9]{1,3})$/\1/')"
 		NEXTFILE="$(printf "mediawiki-%s.%d.patch.gz" "${V_MAJ_MIN}" $((V_PATCH + 1)))"
 
-		echo "Found Mediawiki ${V_MAJ_MIN}.${V_PATCH} in ${DOCUMENT_ROOT}. Updating to ${V_MAJ_MIN}.$((V_PATCH + 1))."
+		echo "Found Mediawiki ${V_MAJ_MIN}.${V_PATCH} in ${DOCUMENT_ROOT}."
 
 		# Try to download new release, if not already existent. Go to next DOCUMENT_ROOT if download error happened. Most likely a 404.
 		if [ ! -f "${TMPDIR}/${NEXTFILE}" ]; then
@@ -53,6 +53,7 @@ for MW_RELEASE_NOTES in $(find /var/www -maxdepth 3 -type f -a -name 'RELEASE-NO
 		fi
 
 		if [ -s "${TMPDIR}/${NEXTFILE}" ]; then
+			echo "Got new patch file, updating to ${V_MAJ_MIN}.$((V_PATCH + 1))."
 			cd "${DOCUMENT_ROOT}" && {
 				zcat "${TMPDIR}/${NEXTFILE}" |patch -p1
 				php -q maintenance/update.php --quick
