@@ -28,7 +28,7 @@ trap '{ rm -rf "${TMPDIR}"; }' EXIT
 
 for MW_RELEASE_NOTES in $(find /var/www -maxdepth 3 -type f -a -name 'RELEASE-NOTES-*'); do
 	DOCUMENT_ROOT="$(dirname "${MW_RELEASE_NOTES}")"
-	V_INSTALLED="$(grep -E '^[=]+ MediaWiki 1\.39\.[0-9]{1,3} [=]+$' "${MW_RELEASE_NOTES}" |awk '{print $3}' |head -1)"
+	V_INSTALLED="$(grep -E '^[=]+ MediaWiki 1\.43\.[0-9]{1,3} [=]+$' "${MW_RELEASE_NOTES}" |awk '{print $3}' |head -1)"
 
 	# Is this a mediawiki instance?
 	if [ -n "${V_INSTALLED}" ]; then
@@ -56,7 +56,7 @@ for MW_RELEASE_NOTES in $(find /var/www -maxdepth 3 -type f -a -name 'RELEASE-NO
 			echo "Got new patch file, updating to ${V_MAJ_MIN}.$((V_PATCH + 1))."
 			cd "${DOCUMENT_ROOT}" && {
 				zcat "${TMPDIR}/${NEXTFILE}" |patch -p1
-				php -q maintenance/update.php --quick
+				php -q maintenance/run.php update --quick
 				cd -
 			}
 		fi

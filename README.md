@@ -33,9 +33,9 @@ This script `mw-auto-patch.sh` accepts no command line parameters, searches the 
 If the local installation lags behind more than one release, `mw-auto-patch.sh` must be run repeatedly.
 
 ### Assumptions
-- Script currently has the LTS-release 1.39 (LTS) hard coded.
+- Script currently has the LTS-release 1.43 (LTS) hard coded.
 - Script assumes all instances to be located in */var/www*, and iterates through them.
 - Script assumes to be run as the user who owns the web tree. In Debian Linux this is user and group *www-data*.
 
 ----
-poc@pocnet.net, 2025-11-11
+poc@pocnet.net, 2026-04-09
